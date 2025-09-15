@@ -1,6 +1,9 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { HeroVideoDialog } from "@/components/ui/hero-video-dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { ArrowDown, Globe2, Landmark, Plane, Send } from "lucide-react";
 import React from "react";
 
@@ -24,6 +27,17 @@ const suggestions = [
 ];
 
 const Hero = () => {
+  const router = useRouter();
+
+  const { user } = useUser();
+
+  const onSend = () => {
+    if (!user) {
+      router.push("/sign-in");
+      return;
+    }
+  };
+
   return (
     <div className="mt-20 w-full flex justify-center">
       {/* Wrapper content */}
@@ -67,6 +81,7 @@ const Hero = () => {
                 ))}
               </div>
               <Button
+                onClick={() => onSend()}
                 size={"icon"}
                 className="bg-gradient-to-r from-primary to-secondary cursor-pointer "
               >

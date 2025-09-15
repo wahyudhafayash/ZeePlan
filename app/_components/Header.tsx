@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@clerk/nextjs";
 
 const menuOptions = [
   {
@@ -41,9 +42,11 @@ const Header = () => {
       </div>
 
       {/* CTA */}
-      <Button className="bg-gradient-to-r from-primary to-secondary text-white">
-        Get Started
-      </Button>
+      <SignInButton mode="modal">
+        <Button className="bg-gradient-to-r from-primary to-secondary text-white">
+          Get Started
+        </Button>
+      </SignInButton>
     </div>
   );
 };
