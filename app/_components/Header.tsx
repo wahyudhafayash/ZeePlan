@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 
 const menuOptions = [
   {
@@ -20,6 +21,8 @@ const menuOptions = [
 ];
 
 const Header = () => {
+  const { user } = useUser();
+
   return (
     <div className="flex justify-between items-center p-4 ">
       {/* Logo */}
@@ -42,11 +45,19 @@ const Header = () => {
       </div>
 
       {/* CTA */}
-      <SignInButton mode="modal">
-        <Button className="bg-gradient-to-r from-primary to-secondary text-white">
-          Get Started
-        </Button>
-      </SignInButton>
+      {!user ? (
+        <SignInButton mode="modal">
+          <Button className="bg-gradient-to-r from-primary to-secondary text-white cursor-pointer">
+            Get Started
+          </Button>
+        </SignInButton>
+      ) : (
+        <Link href="/create-plan">
+          <Button className="bg-gradient-to-r from-primary to-secondary text-white cursor-pointer">
+            Create New Plan
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };
